@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
+	<title>Light Sensor Chart </title>
+  </head>
+  <body>
+  
+  <h1> <center> Light Dependent Resistor Data Chart </h1></center>
+  <div> 
+  
+    <div id="chart">	</div>
+	
+    <script type="text/javascript">
+      var pubnub = new PubNub(
+      {
+        publishKey:"pub-c-961a8cb6-eda7-4fb5-b6a3-d0f5b43db81e",
+        subscribeKey: "sub-c-759c3ac2-a3da-11e9-a74d-4e0ad457cfa9"
+      }
+      );
+      var channel = 'iotchannel';
+      var historical = [];
+
+/*
+       pubnub.history(
+          {
+        channel : 'iotchannel',
+        count : 24
+        },
+        function (status, response) {
+         console.log(status,response);
+           for(var i = 0; i < response.messages.length; i++) {
+             console.log(response.messages[i]['entry']['eon']['sensor']);
+           }
+        }
+      );
+*/
+      eon.chart({
+        channels: [channel],
+        history: true,
+        flow: true,
+        pubnub: pubnub,
+        generate: {
+          bindto: '#chart',
+          data: {
+            type: 'spline',
+            labels: false
+          }
+        }
+      });
+     
+    </script>
+ 
+  </body>
+</html>
+
+
+
+
+	
